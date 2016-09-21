@@ -1,0 +1,48 @@
+<link rel="stylesheet" href="cssFile.css">
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
+<div ng-app="paymentsApp" class="application">
+    <div class="title-bar">
+         <h1 id="paymentsApp-title">Payments-o-matic</h1>
+    </div>
+    <div class="container" ng-controller="PaymentsController">
+        <div class="list">
+            <div ng-repeat="payment in payments" class="repeated-class" ng-class="{'active':curIndex===$index && cancelClicked}" id="paymentsApp-list-{{$index}}" ng-click="showFormFn($index)">
+                <div>{{payment.counterparty}}</div>
+                <div>{{payment.valueDate}}</div>
+            </div>
+        </div>
+        <div class="createNewPayment" id="paymentsApp-newPayment" ng-hide="showForm">
+            <button id="paymentsApp-btn-new" ng-click="showForm=true;createNewPaymentfn();">Create new payment</button>
+        </div>
+        <div class="details" id="paymentsApp-detailsForm" ng-show="showForm" >
+            <form role='form' name='paymentApp' novalidate="">
+                <div class="details-inner">
+                    <label>Counterparty</label>
+                    <input class="input-cpty" ng-class="{'red':cptyred}" id="paymentsApp-inpt-cpty" ng-model="counterparty" ng-blur="validation()" required="" />
+                </div>
+                <div class="details-inner">
+                    <label class="label">Value Date</label>
+                    <input class="input-date" ng-class="{'red':datered}" id="paymentsApp-inpt-date" ng-model="valueDate" ng-blur="validation()" required="" />
+                </div>
+                <div class="details-inner">
+                    <label class="label">Credit Account</label>
+                    <input class="input-acc" ng-class="{'red':accred}" id="paymentsApp-inpt-acc" ng-model="creditAccount" ng-blur="validation()" required="" />
+                </div>
+                <div class="details-inner">
+                    <label class="label">Amount</label>
+                    <input class="input-amt" ng-class="{'red':amtred}" id="paymentsApp-inpt-amt" ng-model="amount" ng-blur="validation()" required="" />
+                </div>
+                <div class="details-inner">
+                    <label class="label">Currency</label>
+                    <input class="input-cur" ng-class="{'red':curred}" id="paymentsApp-inpt-cur" ng-model="currency" ng-blur="validation()" required="" />
+                </div>
+                <div class="details-inner btn-section">
+                    <button class="" id="paymentsApp-btn-save" ng-disabled="paymentApp.$invalid || disableSave" ng-click="saveFormFn();" >Save</button>
+                    <button id="paymentsApp-btn-cancel" ng-click="showForm = false; cancelClicked = false;">Cancel</button>
+                    <button class="" ng-show="showDelete" id="paymentsApp-btn-delete" ng-click="deleteListFn();" >Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="jsFiles.js"></script>
